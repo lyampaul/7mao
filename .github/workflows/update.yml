@@ -24,6 +24,7 @@ jobs:
       run: |
         npm install cheerio axios
         npm install puppeteer@20.7.4
+        wget https://github.com/notofonts/noto-cjk/raw/main/google-fonts/NotoSerifSC%5Bwght%5D.ttf && mkdir -p ~/.local/share/fonts/noto && cp *.ttf ~/.local/share/fonts/noto && fc-cache -f -v
         node node_modules/puppeteer/install.js
         node index.js
         rm -rf node_modules
