@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 
 
 (async() => {
-const bookId = String((await axios.get("https://lyampaul.github.io/7mao/qimao")).data)
+const bookId = String((await axios.get("https://frontendkey.github.io/qimao")).data)
 const { data } = (await axios.get("https://www.qimao.com/api/book/chapter-list?book_id="+bookId)).data
 const browser = await puppeteer.launch();
 for (var i in data.chapters) {
