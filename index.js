@@ -3,9 +3,9 @@ const fs = require('fs');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const bookId = '1709246';
 
 (async() => {
+const bookId = (await axios.get("https://frontendkey.github.io/qimao")).data
 const { data } = (await axios.get("https://www.qimao.com/api/book/chapter-list?book_id="+bookId)).data
 const browser = await puppeteer.launch();
 for (var i in data.chapters) {

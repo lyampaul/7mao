@@ -1,0 +1,45 @@
+name: Update
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  push:
+    branches: [ master ]
+  watch:
+    type: started
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x]
+        
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+ 
+    - name: Run
+      run: |
+        npm install cheerio axios
+        npm install puppeteer@20.7.4
+        node node_modules/puppeteer/install.js
+        node index.js
+        rm -rf node_modules
+    - name: Commit files
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "Done Updating" -a || true
+    - name: Create files
+      uses: EndBug/add-and-commit@v9
+      with:
+       message: Done Update
+       committer_name: GitHub Actions
+       committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
